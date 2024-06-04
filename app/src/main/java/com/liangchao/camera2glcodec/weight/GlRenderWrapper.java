@@ -79,7 +79,7 @@ public class GlRenderWrapper implements GLSurfaceView.Renderer, SurfaceTexture.O
         camera2Helper.setPreviewSizeListener(this);
         camera2Helper.setOnPreviewListener(this);
         //打开相机
-        camera2Helper.openCamera(width, height, mSurfaceTexture);
+        camera2Helper.openCamera(width, height, mSurfaceTexture,"0");
 
 
         float scaleX = (float) mPreviewHeight / (float) width;

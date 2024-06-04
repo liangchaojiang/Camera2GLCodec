@@ -123,13 +123,13 @@ public class Camera2Helper {
     private CaptureRequest mPreviewRequest;
 
 
-    public void openCamera(int width, int height, SurfaceTexture mSurfaceTexture) {
+    public void openCamera(int width, int height, SurfaceTexture mSurfaceTexture,String cameraId) {
         this.mSurfaceTexture = mSurfaceTexture;
 
         startBackgroundThread();
 
         //设置预览图像的大小，surfaceview的大小。
-        setUpCameraOutputs(width, height);
+        setUpCameraOutputs(width, height,cameraId);
         CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -211,24 +211,16 @@ public class Camera2Helper {
      * @param height The height of available size for camera preview
      */
     @SuppressWarnings("SuspiciousNameCombination")
-    private void setUpCameraOutputs(int width, int height) {
+    private void setUpCameraOutputs(int width, int height,String cameraId) {
 
         CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         try {
-            for (String cameraId : manager.getCameraIdList()) {
+
                 CameraCharacteristics characteristics
                         = manager.getCameraCharacteristics(cameraId);
 
-                // We don't use a front facing camera in this sample.
-                Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-                if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
-                    continue;
-                }
                 StreamConfigurationMap map = characteristics.get(
                         CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                if (map == null) {
-                    continue;
-                }
 
                 Point displaySize = new Point();
                 mContext.getWindowManager().getDefaultDisplay().getSize(displaySize);
@@ -254,8 +246,8 @@ public class Camera2Helper {
                 imageReader = ImageReader.newInstance(mPreviewSize.getWidth(), mPreviewSize.getHeight(), ImageFormat.YUV_420_888, 2);
                 imageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
                 mCameraId = cameraId;
-                return;
-            }
+
+
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
