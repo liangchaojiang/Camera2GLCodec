@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Camera2GLCodec</string>
+    <string name="start_record">StartRecord</string>
+    <string name="stop_record">StopRecord</string>
+</resources>
