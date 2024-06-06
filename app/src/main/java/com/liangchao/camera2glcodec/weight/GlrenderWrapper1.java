@@ -1,5 +1,6 @@
 package com.liangchao.camera2glcodec.weight;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -18,11 +19,16 @@ import com.liangchao.camera2glcodec.util.OnRecordListener;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+/**
+ * @Author JiangLiangChao
+ * @description:
+ * @data Created at: 6/4/24 7:43 PM
+ */
+public class GlrenderWrapper1 implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener, Camera2Helper.OnPreviewSizeListener, Camera2Helper.OnPreviewListener {
 
-public class GlRenderWrapper implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener, Camera2Helper.OnPreviewSizeListener, Camera2Helper.OnPreviewListener {
 
-    private final String TAG = "GlRenderWrapper";
-    private final GlRenderView glRenderView;
+    private final String TAG = "GlRenderWrapper1";
+    private final GlRederView1 glRenderView;
     private Camera2Helper camera2Helper;
     private int[] mTextures;
     private SurfaceTexture mSurfaceTexture;
@@ -41,15 +47,9 @@ public class GlRenderWrapper implements GLSurfaceView.Renderer, SurfaceTexture.O
     private boolean bigEyeEnable;
     private boolean beautyEnable;
 
-    public GlRenderWrapper(GlRenderView glRenderView) {
+    public GlrenderWrapper1(GlRederView1 glRenderView) {
         this.glRenderView = glRenderView;
         Context context = glRenderView.getContext();
-
-//        //拷贝 模型
-//        OpenGlUtils.copyAssets2SdCard(context, "lbpcascade_frontalface_improved.xml",
-//                "/sdcard/lbpcascade_frontalface.xml");
-//        OpenGlUtils.copyAssets2SdCard(context, "seeta_fa_v1.1.bin",
-//                "/sdcard/seeta_fa_v1.1.bin");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GlRenderWrapper implements GLSurfaceView.Renderer, SurfaceTexture.O
         camera2Helper.setPreviewSizeListener(this);
         camera2Helper.setOnPreviewListener(this);
         //打开相机
-        camera2Helper.openCamera(3008, 3000, mSurfaceTexture,"0");
+        camera2Helper.openCamera(3008, 3000, mSurfaceTexture,"1");
 
 
         float scaleX = (float) mPreviewHeight / (float) width;
@@ -88,8 +88,8 @@ public class GlRenderWrapper implements GLSurfaceView.Renderer, SurfaceTexture.O
         float max = Math.max(scaleX, scaleY);
 
         screenSurfaceWid = 3008;//(int) (mPreviewHeight / max);
-        screenSurfaceHeight = 3000;//(int) (mPreviewWdith / max);
-        screenX = 0;// width - (int) (mPreviewHeight / max);
+        screenSurfaceHeight = 3000;//(int) (mPreviewWdith / ma1080x);
+        screenX = 0;//width - (int) (mPreviewHeight / max);
         screenY = 0;//height - (int) (mPreviewWdith / max);
 
         //prepare 传如 绘制到屏幕上的宽 高 起始点的X坐标 起使点的Y坐标

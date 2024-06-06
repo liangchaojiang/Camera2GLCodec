@@ -224,26 +224,16 @@ public class Camera2Helper {
 
                 Point displaySize = new Point();
                 mContext.getWindowManager().getDefaultDisplay().getSize(displaySize);
-                int rotatedPreviewWidth = width;
-                int rotatedPreviewHeight = height;
-                int maxPreviewWidth = displaySize.x;
-                int maxPreviewHeight = displaySize.y;
-
-                Size largest = Collections.max(
-                        Arrays.asList(map.getOutputSizes(ImageFormat.YUV_420_888)),
-                        new CompareSizesByArea());
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
-                mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
-                        rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
-                        maxPreviewHeight, largest);
+                mPreviewSize = new Size(1920,1080);
 
                 if (onPreviewSizeListener != null) {
                     onPreviewSizeListener.onSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
                 }
 
-                imageReader = ImageReader.newInstance(mPreviewSize.getWidth(), mPreviewSize.getHeight(), ImageFormat.YUV_420_888, 2);
+                imageReader = ImageReader.newInstance(640, 480, ImageFormat.YUV_420_888, 2);
                 imageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
                 mCameraId = cameraId;
 
@@ -304,10 +294,10 @@ public class Camera2Helper {
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(surface);
-            mPreviewRequestBuilder.addTarget(imageReader.getSurface());
+            //mPreviewRequestBuilder.addTarget(imageReader.getSurface());
 
             // Here, we create a CameraCaptureSession for camera preview.
-            mCameraDevice.createCaptureSession(Arrays.asList(surface, imageReader.getSurface()),
+            mCameraDevice.createCaptureSession(Arrays.asList(surface),//, imageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
 
                         @Override

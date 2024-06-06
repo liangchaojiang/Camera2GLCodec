@@ -24,8 +24,11 @@
 
     <com.liangchao.camera2glcodec.weight.GlRenderView
         android:id="@+id/render_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
-
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+    <com.liangchao.camera2glcodec.weight.GlRederView1
+        android:id="@+id/reder_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 
 </LinearLayout>
